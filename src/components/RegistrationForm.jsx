@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import mogojastro from "../assets/mogojastro.png";
 import axios from "axios";
 import Carousel from "./Carousel";
+import Loading from './Loading';
 
 const EVENT_API = import.meta.env.VITE_EVENT_API + "/register";
 
@@ -272,7 +273,7 @@ const RegistrationForm = ({
       };
   
       try{
-        const res = await axios.post(EVENT_API, schema);
+        const res = await axios.post(EVENT_API, schema).then(setQr((p)=>{return <Loading />}));
         setPay(2);
         // console.log(res);
         localStorage.clear();
