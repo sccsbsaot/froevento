@@ -6,7 +6,7 @@ import Attendance from "./Attendance";
 
 const Dashboard = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
-    const [data, setData] = useState("");
+    const [data, setData] = useState(null);
 
 
     return (
@@ -14,17 +14,8 @@ const Dashboard = () => {
         {(!isLoggedIn) 
         ? <Login isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} /> 
         : (data)
-        ? <div>
-        <h1>Dashboard</h1>
-        <Attendance setIsLoggedIn={setIsLoggedIn} setData={setData} data={data} />
-        </div>
-        : <div>
-        <button type="button" class="w-40 py-2 ml-20 mt-4 bg-blue-500 text-white rounded-md hover:bg-blue-600" onClick={() => {setIsLoggedIn(false)}} >
-        logout
-        </button> 
-        <Test></Test>
-        </div>
-        
+        ? <Attendance setIsLoggedIn={setIsLoggedIn} setData={setData} data={data} />
+        : <Test data={data} setData={setData} setIsLoggedIn={setIsLoggedIn} />
         }  
         </>
     )
