@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Login from "./Login";
-// import QrScanner from "./QrScanner";
+import QrScanner from "./QRScanner";
 import Attendance from "./Attendance";
 
 
@@ -22,7 +22,7 @@ const Dashboard = () => {
         <button type="button" class="w-40 py-2 ml-20 mt-4 bg-blue-500 text-white rounded-md hover:bg-blue-600" onClick={() => {setIsLoggedIn(false)}} >
         logout
         </button> 
-        {/* <QrScanner data/>={data} setData={setData} setIsLoggedIn={setIsLoggedIn} /> */}
+        <QrScanner data={data} setData={setData} setIsLoggedIn={setIsLoggedIn} />
         </div>
         
         }  
