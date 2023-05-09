@@ -68,7 +68,7 @@ const Test = ({data, setData, setIsLoggedIn}) => {
       <div className=' items-center flex flex-col bg-black h-[100vh]'>
         {(scan) ? <QrReader
           delay={500}
-          facingMode={"user"}
+          facingMode={"environment"}
           onError={handleError}
           onScan={handleScan}
           style={{ width: '100%' }}
