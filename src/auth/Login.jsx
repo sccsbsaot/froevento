@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-const LOGIN_API = import.meta.env.VITE_EVENT_API + "/login";
+const LOGIN_API = import.meta.env.VITE_EVENT_API + "/login" ;
 
 
 const Login = ({ isLoggedIn, setIsLoggedIn }) => {
@@ -9,27 +9,32 @@ const Login = ({ isLoggedIn, setIsLoggedIn }) => {
   const [password, setPassword] = useState('');
 
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
     // axios send username and password to backend recieve response from backend
     // axio receive jwt token from backend
 
-    // axios.post(LOGIN_API, {
-    //   username: username,
-    //   password: password
-    // })
-    // .then( (response) => {
-    //   console.log(response);
-    //   setIsLoggedIn(true);
-    //   localStorage.setItem('jwt', response.data.jwt);
-    // })
-    // .catch( (error) => {
-    //   console.log(error);
-    // });
+    try {
+      const response = await axios.post(LOGIN_API, {
+          userName: username,
+          pswd: password
+        })
+      if (response.status === 200) {
+        localStorage.setItem("id", response.data.id);
+        localStorage.setItem("token", response.data.token);
 
-    setIsLoggedIn(true);
-    console.log("login");
+        setIsLoggedIn(true);
+        // console.log("login", resp);
+        alert("Login Successful")
+      }
+
+    }catch (error) {
+      console.log(error);
+    };
+
+    // setIsLoggedIn(true);
+    // setIsLoggedIn(true);
   };
 
   return (
