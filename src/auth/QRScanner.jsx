@@ -1,65 +1,35 @@
 import { useState } from 'react';
 import QrReader from 'modern-react-qr-reader';
-// import axios from 'axios';
+import axios from 'axios';
 
 
-const QR_API = import.meta.env.VITE_EVENT_API + "/qr";
+const DETAILS_API = import.meta.env.VITE_EVENT_API + "/details";
+
 
 const Test = ({data, setData, setIsLoggedIn}) => {
   const [scan, setScan] = useState(() => {false});
 
-  const handleScan = x => {
+  const handleScan = async (x) => {
     if (x) {
-        alert(x);
 
-        setData(
-          {
-            date: '2021-10-10',
-            time: '10:00',
-            slot: '1',
-            teamName: 'Team 1',
-            members: [
-              {
-                name: "Jhilik Singha",
-                email: "jhilik.singha.22@aot.edu.in",
-                year: "1st Year",
-                branch: "CSE",
-                gender: "Female",
-                role: "leader",
-              },
-              {
-                name: "Nilava Chakraborty",
-                email: "nilava.chakraborty.22@aot.edu.in",
-                year: "1st Year",
-                branch: "CSE",
-                gender: "Male",
-                role: "member",
-              },
-              {
-                name: "Ishita Saha",
-                email: "Ishita.saha.22@aot.edu.in",
-                year: "1st Year",
-                branch: "CSE",
-                gender: "Female",
-                role: "member",
-              }
-            ]
+
+        console.log(x);
+        try {
+          const response = await axios.post(DETAILS_API, {
+              data: x
+            })
+          console.log(response);
+          if (response.status === 200) {
+            setData(response.data);
           }
-        )
-
-        // axios.post(QR_API, {
-        //   qr: Number(x)
-        // })
-        // .then( (response) => {
-        //   console.log(response);
-        //   setData(response.data);
-        // })
-        // .catch( (error) => {
-        //   alert(error ? error : "error");
-        // });
+    
+        }catch (error) {
+          console.log(error);
+        };
     }
   };
 
+  
   const handleError = err => {
     console.error(err)
   }
@@ -67,8 +37,8 @@ const Test = ({data, setData, setIsLoggedIn}) => {
   return (
       <div className=' items-center flex flex-col bg-black h-[100vh]'>
         {(scan) ? <QrReader
-          delay={500}
-          facingMode={"environment"}
+          delay={800}
+          facingMode={"user"}
           onError={handleError}
           onScan={handleScan}
           style={{ width: '100%' }}
