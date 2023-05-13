@@ -1,40 +1,40 @@
-import React, { useState } from 'react';
-import axios from 'axios';
+import React, { useState } from "react";
+import axios from "axios";
 
 const LOGIN_API = import.meta.env.VITE_EVENT_API + "/login";
 
-
 const Login = ({ isLoggedIn, setIsLoggedIn }) => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
 
-
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
     // axios send username and password to backend recieve response from backend
     // axio receive jwt token from backend
 
-    // axios.post(LOGIN_API, {
-    //   username: username,
-    //   password: password
-    // })
-    // .then( (response) => {
-    //   console.log(response);
-    //   setIsLoggedIn(true);
-    //   localStorage.setItem('jwt', response.data.jwt);
-    // })
-    // .catch( (error) => {
-    //   console.log(error);
-    // });
+    try {
+      // setIsLoggedIn(true);
+      const response = await axios.post(LOGIN_API, {
+        userName: username,
+        pswd: password,
+      });
 
-    setIsLoggedIn(true);
-    console.log("login");
+      if (response.status === 200) {
+        localStorage.setItem("id", response.data.id);
+        localStorage.setItem("token", response.data.token);
+
+        setIsLoggedIn(true);
+        alert("Admin login successful!")
+        // console.log("login", resp);
+      }
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   return (
-    <form className='p-8 flex flex-col m-4'  >
-       
+    <form className="p-8 flex flex-col m-4">
       <div>
         <label className="block mb-2 text-gray-700">Username:</label>
         <input
@@ -45,7 +45,9 @@ const Login = ({ isLoggedIn, setIsLoggedIn }) => {
         />
       </div>
       <div>
-        <label className="block mb-2 text-gray-700 border-red-500">Password:</label>
+        <label className="block mb-2 text-gray-700 border-red-500">
+          Password:
+        </label>
         <input
           className="w-full px-4 py-2 border-2 rounded-md focus:outline-none focus:border-blue-700"
           type="password"
@@ -53,7 +55,13 @@ const Login = ({ isLoggedIn, setIsLoggedIn }) => {
           onChange={(event) => setPassword(event.target.value)}
         />
       </div>
-      <button onClick={handleSubmit}  type="submit" className="w-full py-2 mt-4 bg-blue-500 text-white rounded-md hover:bg-blue-600">Login</button>
+      <button
+        onClick={handleSubmit}
+        type="submit"
+        className="w-full py-2 mt-4 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+      >
+        Login
+      </button>
     </form>
   );
 };
