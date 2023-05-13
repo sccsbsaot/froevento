@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 
-const LOGIN_API = import.meta.env.VITE_EVENT_API + "/admin";
+const LOGIN_API = import.meta.env.VITE_EVENT_API + "/login";
 
 const Login = ({ isLoggedIn, setIsLoggedIn }) => {
   const [username, setUsername] = useState("");
